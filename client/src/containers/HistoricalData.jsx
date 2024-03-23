@@ -1,91 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import Axios from "axios";
-import {
-  Box,
-  Typography,
-  Tab,
-  Tabs,
-  Card,
-  CardContent,
-  styled,
-  Divider,
-} from "@mui/material";
-
+import { Box, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
+import IconButton from "@mui/material/IconButton";
+import Modal from "../components/Modal";
+import ArticleIcon from "@mui/icons-material/Article";
+import { DataGrid } from "@mui/x-data-grid";
 import PropTypes from "prop-types";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-
-//import { DataGrid } from "@mui/x-data-grid";
-import {
-  DataGrid,
-  GridToolbarContainer,
-  GridToolbarExport,
-} from "@mui/x-data-grid";
-import { useDemoData } from "@mui/x-data-grid-generator";
-
-import Paper from "@mui/material/Paper";
-
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
-
-import SearchIcon from "@mui/icons-material/Search";
-
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-
-import { Line } from "react-chartjs-2";
-
-import dayjs from "dayjs";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import Checkbox from "@mui/material/Checkbox";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-function getFullName(params) {
-  return `${params.row.firstName || ""} ${params.row.lastName || ""}`;
-}
-
-// const columns = [
-//   { field: "timestamp", headerName: "Data Time", width: 200 },
-//   { field: "data1", headerName: "Device 1", width: 130 },
-//   { field: "data2", headerName: "Device 2", width: 130 },
-//   { field: "data3", headerName: "Device 3", width: 130 },
-// ];
-
-const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon" },
-  { id: 2, lastName: "Lannister", firstName: "Cersei" },
-  { id: 3, lastName: "Lannister", firstName: "Jaime" },
-  { id: 4, lastName: "Stark", firstName: "Arya" },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys" },
-];
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  // textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
+import { useReactToPrint } from 'react-to-print'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -113,423 +35,652 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
+function HistoricalData() {
+  const [historical, setHistorical] = useState({});
+  const [historicalDetail, setHistoricalDetail] = useState({});
+  const [error, setError] = useState([]);
 
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top",
-    },
-    title: {
-      display: true,
-      text: "Historical data",
-    },
-  },
-};
+  const [searchTerm, setSearchTerm] = useState("");
 
-function CustomToolbar() {
-  return (
-    <GridToolbarContainer>
-      <GridToolbarExport csvOptions={{ allColumns: true}} />
-    </GridToolbarContainer>
-  );
-}
+  const componentRef = useRef()
 
-const HistoricalData = () => {
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    documentTitle: 'MCS+',
+    pageStyle: '@page { margin-top: 20mm; margin-bottom: 20mm; }'
+  })
 
-  const [value, setValue] = useState(0);
-  const [value1, setValue1] = useState();
+  // const filteredRows = useMemo(() => {
+  //   if (!searchTerm) return historical;
 
-  const [gender, setGender] = useState("false");
+  //   if (historical.length > 0) {
+  //     const attributes = Object.keys(historical[0]);
 
-  const [devicesSelect, setDevicesSelect] = useState([]);
-  const [deviceSelected1, setDeviceSelected1] = useState();
-  const [deviceSelected2, setDeviceSelected2] = useState();
-  const [deviceSelected3, setDeviceSelected3] = useState();
+  //     const list = [];
 
-  const [dataSelect, setDataSelect] = useState([]);
-  const [dataSelected1, setDataSelected1] = useState();
-  const [dataSelected2, setDataSelected2] = useState();
-  const [dataSelected3, setDataSelected3] = useState();
+  //     for (const current of historical) {
+  //       for (const attribute of attributes) {
+  //         if (attribute === "id") {
+  //           continue;
+  //         }
+  //         const value = current[attribute];
+  //         console.log(value)
+  //         if (value && value.toLowerCase() === searchTerm.toLowerCase()) {
+  //           const found = historical.find((row) => row.id === current.id);
+  //           if (found) {
+  //             list.push(found);
+  //           }
+  //         }
+  //       }
+  //     }
+  //     return list;
+  //   }
 
-  const [nameDataSelected1, setNameDataSelected1] = useState();
-  const [nameDataSelected2, setNameDataSelected2] = useState();
-  const [nameDataSelected3, setNameDataSelected3] = useState();
+  //   return [];
+  // }, [searchTerm, historical]);
 
-  const [startTime, setStartTime] = useState(
-    dayjs().format("DD/MM/YYYY HH:mm")
-  );
-  const [endTime, setEndTime] = useState(dayjs().format("DD/MM/YYYY HH:mm"));
+  const filteredRows = useMemo(() => {
+    if (!searchTerm) return historical;
 
-  const [orderBy, setOrderBy] = useState("ASC");
+    if (historical.length > 0) {
+      const list = [];
 
-  const [data1, setData1] = useState();
-  const [data2, setData2] = useState();
-  const [data3, setData3] = useState();
-  const [timestamp, setTimestamp] = useState();
-
-  const [dataTable, setDataTable] = useState([]);
-
-  const dateFormatter = (timestamp) => {
-    return dayjs(timestamp).format("DD/MM/YYYY HH:mm");
-  };
-
-  let columns = [
-    { field: "timestamp", headerName: "Data Time", width: 200 }
-  ];
-
-  let data = {
-    labels: timestamp,
-    datasets: [
-      {
-        label: "-",
-      }
-    ],
-  };
-  
-  if (deviceSelected1 != undefined && dataSelected1 != undefined ){
-     data = {
-    labels: timestamp,
-    datasets: [
-      {
-        label: dataSelected1 + "-" + nameDataSelected1,
-        data: data1,
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      }
-    ],
-  };
-
-  columns = [
-    { field: "timestamp", headerName: "Data Time", width: 200 },
-    { field: "data1", headerName: dataSelected1 + "-" + nameDataSelected1, width: 130 }
-  ];
-}
-
-if (deviceSelected1 != undefined && dataSelected1 != undefined && deviceSelected2 != undefined && dataSelected2 != undefined ){
-       data = {
-      labels: timestamp,
-      datasets: [
-        {
-          label: dataSelected1 + "-" + nameDataSelected1,
-          data: data1,
-          borderColor: "rgb(255, 99, 132)",
-          backgroundColor: "rgba(255, 99, 132, 0.5)",
-        },
-        {
-          label: dataSelected2 + "-" + nameDataSelected2,
-          data: data2,
-          borderColor: "rgb(53, 162, 235)",
-          backgroundColor: "rgba(53, 162, 235, 0.5)",
+      for (const current of historical) {
+        for (const key in current) {
+          if (key === "id") {
+            continue;
+          }
+          const value = current[key];
+          if (typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())) {
+            list.push(current);
+            break;
+          }
         }
-      ],
-    };
+      }
+      return list;
+    }
 
-    columns = [
-      { field: "timestamp", headerName: "Data Time", width: 200 },
-      { field: "data1", headerName: dataSelected1 + "-" + nameDataSelected1, width: 130 },
-      { field: "data2", headerName: dataSelected2 + "-" + nameDataSelected2, width: 130 }
-    ];
-  }
+    return [];
+  }, [searchTerm, historical]);
 
-  if (deviceSelected1 != undefined && dataSelected1 != undefined && deviceSelected2 != undefined && dataSelected2 != undefined && deviceSelected3 != undefined && dataSelected3 != undefined){
-      data = {
-      labels: timestamp,
-      datasets: [
-        {
-          label: dataSelected1 + "-" + nameDataSelected1,
-          data: data1,
-          borderColor: "rgb(255, 99, 132)",
-          backgroundColor: "rgba(255, 99, 132, 0.5)",
-        },
-        {
-          label: dataSelected2 + "-" + nameDataSelected2,
-          data: data2,
-          borderColor: "rgb(53, 162, 235)",
-          backgroundColor: "rgba(53, 162, 235, 0.5)",
-        },
-        {
-          label: dataSelected3 + "-" + nameDataSelected3,
-          data: data3,
-          borderColor: "rgb(128, 255, 0)",
-          backgroundColor: "rgba(128, 255, 0, 0.5)",
-        },
-      ],
-    };
 
-    columns = [
-      { field: "timestamp", headerName: "Data Time", width: 200 },
-      { field: "data1", headerName: dataSelected1 + "-" + nameDataSelected1, width: 130 },
-      { field: "data2", headerName: dataSelected2 + "-" + nameDataSelected2, width: 130 },
-      { field: "data3", headerName: dataSelected3 + "-" + nameDataSelected3, width: 130 },
-    ];
-  }
-
-  
 
   useEffect(() => {
-    Axios.get("http://119.59.105.226:3333/historicaldata")
+
+    Axios.get("http://127.0.0.1:1880/historical")
 
       .then((response) => {
-        response.data.map((val) => {
-          setDevicesSelect(val.deviceName);
-          setDataSelect(val.data);
-        });
+        setHistorical(response.data);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   }, []);
 
-  const getReport = () => {
-    Axios.get("http://119.59.105.226:3333/historicaldata", {
-      params: {
-        deviceSelected1: deviceSelected1,
-        deviceSelected2: deviceSelected2,
-        deviceSelected3: deviceSelected3,
-        dataSelected1: dataSelected1,
-        dataSelected2: dataSelected2,
-        dataSelected3: dataSelected3,
-        startTime: startTime,
-        endTime: endTime,
-        orderBy: orderBy,
-      },
-    }).then((response) => {
-      response.data.map((val) => {
-        setData1(val.data1);
-        setData2(val.data2);
-        setData3(val.data3);
-        setTimestamp(val.timestamp);
-        setDataTable(val.dataTable);
-      });
-    });
+  const handleHistoricalDetail = async (item) => {
+    try {
+      await Axios
+        .get(
+          "http://127.0.0.1:1880/historical/detail/" + item.id
+        )
+        .then((res) => {
+          setHistoricalDetail(res.data[0])
+          if (res.data[0].error !== null){
+            setError(res.data[0].error)
+          }
+          console.log(res.data[0])
+        })
+        .catch((err) => {
+          throw err.response.data;
+        });
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const columns = [
+    { field: "id", headerAlign: "center", align: "center" },
+    {
+      field: "protocol",
+      headerName: "Protocol",
+      headerAlign: "center",
+      align: "center",
+      width: 150,
+    },
+    {
+      field: "machine_type",
+      headerName: "Machine",
+      headerAlign: "center",
+      align: "center",
+      width: 150,
+    },
+    {
+      field: "serial_no",
+      headerName: "Serial NO",
+      headerAlign: "center",
+      align: "center",
+      width: 150,
+    },
+    {
+      field: "name",
+      headerName: "Name",
+      headerAlign: "center",
+      align: "center",
+      width: 150,
+    },
+    {
+      field: "donation_number",
+      headerName: "Donation NO",
+      headerAlign: "center",
+      align: "center",
+      width: 150,
+    },
+    {
+      field: "timestamp",
+      headerName: "Start",
+      headerAlign: "center",
+      align: "center",
+      width: 150,
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      headerAlign: "center",
+      align: "center",
+      width: 150,
+      renderCell: (params) => (
+        <Box sx={styles.Column}>
+          <IconButton
+            onClick={(e) => handleHistoricalDetail(params)}
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            size="large"
+          >
+            <ArticleIcon fontSize="inherit" />
+          </IconButton>
+        </Box>
+      ),
+    },
+  ];
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Grid container>
-        <Grid item xs={6} md={2.5}>
-          <Item>
-            <Typography sx={styles.pageTitle} variant="h6">
-              Data Select
-            </Typography>
-            <Typography sx={{ ml: 1 }} variant="h6">
-              Device 1
-            </Typography>
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              options={devicesSelect}
-              sx={{ width: 180, ml: 1, mt: 1 }}
-              clearOnEscape
-              onChange={(event, value) =>value ? (setDeviceSelected1(value.uuid), setNameDataSelected1(value.label)) : (setDeviceSelected1(event.target.value), setNameDataSelected1(event.target.value))}
-              
-              // onChange={(event, newValue) => {
-              //   setDeviceSelected1(newValue.uuid);
-              // }}
-              renderInput={(params) => <TextField {...params} label="Device" />}
-            />
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              options={dataSelect}
-              sx={{ width: 180, ml: 1, mt: 1 }}
-              clearOnEscape
-              onChange={(event, value) =>value ? setDataSelected1(value.label) : setDataSelected1(event.target.value)}
-              // onChange={(event, newValue) => {
-              //   setDataSelected1(newValue.label);
-              // }}
-              renderInput={(params) => <TextField {...params} label="Data" />} 
-            />
-            <Divider sx={{ mt: 2 }} />
-            <Typography sx={{ ml: 1, mt: 2 }} variant="h6">
-              Device 2
-            </Typography>
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              options={devicesSelect}
-              sx={{ width: 180, ml: 1, mt: 1 }}
-              clearOnEscape
-              onChange={(event, value) =>value ? (setDeviceSelected2(value.uuid), setNameDataSelected2(value.label)) : (setDeviceSelected2(event.target.value), setNameDataSelected2(event.target.value))}
-              // onChange={(event, newValue) => {
-              //   setDeviceSelected2(newValue.uuid);
-              // }}
-              renderInput={(params) => <TextField {...params} label="Device" />}
-            />
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              options={dataSelect}
-              sx={{ width: 180, ml: 1, mt: 1 }}
-              clearOnEscape
-              onChange={(event, value) =>value ? setDataSelected2(value.label) : setDataSelected2(event.target.value)}
-              // onChange={(event, newValue) => {
-              //   setDataSelected2(newValue.label);
-              // }}
-              renderInput={(params) => <TextField {...params} label="Data" />}
-            />
-            <Divider sx={{ mt: 2 }} />
-            <Typography sx={{ ml: 1, mt: 2 }} variant="h6">
-              Device 3
-            </Typography>
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              options={devicesSelect}
-              sx={{ width: 180, ml: 1, mt: 1 }}
-              clearOnEscape
-              onChange={(event, value) =>value ? (setDeviceSelected3(value.uuid), setNameDataSelected3(value.label)) : (setDeviceSelected3(event.target.value), setNameDataSelected3(event.target.value))}
-              // onChange={(event, newValue) => {
-              //   setDeviceSelected3(newValue.uuid);
-              // }}
-              renderInput={(params) => <TextField {...params} label="Device" />}
-            />
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              options={dataSelect}
-              sx={{ width: 180, ml: 1, mt: 1 }}
-              clearOnEscape
-              onChange={(event, value) =>value ? setDataSelected3(value.label) : setDataSelected3(event.target.value)}
-              // onChange={(event, newValue) => {
-              //   setDataSelected3(newValue.label);
-              // }}
-              renderInput={(params) => <TextField {...params} label="Data" />}
-            />
-            <Divider sx={{ mt: 2 }} />
-          </Item>
-        </Grid>
-
-        <Grid container xs={12} md={9} sx={{ ml: 1 }}>
-          <Grid item xs={12} md={12}>
-            <Item>
-              <Box sx={{ padding: 3 }}>
-                <Box sx={{ float: "left" }}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={["DateTimePicker"]}>
-                      <DateTimePicker
-                        label="Start Time"
-                        ampm={false}
-                        inputFormat="YYYY/MM/DD hh:mm"
-                        sx={{ width: 100 }}
-                        onChange={(newValue) => setStartTime(newValue)}
-                      />
-                    </DemoContainer>
-                  </LocalizationProvider>
-                </Box>
-                <Box>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={["DateTimePicker"]}>
-                      <DateTimePicker
-                        label="End Time"
-                        sx={{ width: 100, ml: 3 }}
-                        ampm={false}
-                        inputFormat="YYYY/MM/DD hh:mm"
-                        onChange={(newValue) => setEndTime(newValue)}
-                      />
-                    </DemoContainer>
-                  </LocalizationProvider>
-                </Box>
-
-                <Box>
-                  <Typography
-                    sx={{ mt: 3, display: "inline-block" }}
-                    variant="h6"
-                  >
-                    Sort
-                  </Typography>
-                  <Box sx={{ mt: 1, ml: 1, display: "inline-block" }}>
-                    <Button
-                      sx={{
-                        fontSize: 13,
-                      }}
-                      variant="contained"
-                      onClick={() => setOrderBy("ASC")}
-                    >
-                      Ascending
-                    </Button>
-                    <Button
-                      sx={{
-                        ml: 1,
-                        fontSize: 13,
-                      }}
-                      variant="contained"
-                      onClick={() => setOrderBy("DESC")}
-                    >
-                      Decending
-                    </Button>
-                    <Button
-                      sx={{ ml: 5, fontSize: 13 }}
-                      variant="contained"
-                      color="success"
-                      endIcon={<SearchIcon />}
-                      onClick={getReport}
-                    >
-                      Search
-                    </Button>
-                  </Box>
-                </Box>
-              </Box>
-            </Item>
-          </Grid>
-          <Grid item xs={12} md={12} sx={{ mt: 1 }}>
-            <Item>
-              <Box sx={{ padding: 3 }}>
-                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                  <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    aria-label="basic tabs example"
-                  >
-                    <Tab label="chart" {...a11yProps(0)} />
-                    <Tab label="table" {...a11yProps(1)} />
-                  </Tabs>
-                </Box>
-
-                <TabPanel value={value} index={0}>
-                  <Line options={options} data={data} />
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                  <Box sx={{ height: 800, width: "100%" }}>
-                    <DataGrid
-                      rows={dataTable} columns={columns}
-                      checkboxSelection
-                      components={{
-                        Toolbar: CustomToolbar,
-                      }}
+    <>
+      <Box>
+        <Box sx={{ flexGrow: 1 }}>
+          <Box>
+            <Box sx={{ width: "99%" }}>
+              <div className="container mt-4">
+                <div className="row">
+                  <div className="col-6">
+                    <h5 className="card-title mt-5">Historical Procedure</h5>
+                  </div>
+                  <div className="col-6">
+                    <div className="mb-2">Label</div>
+                    <input
+                      type="search"
+                      className="form-control rounded w-100"
+                      placeholder="Search"
+                      aria-label="Search"
+                      aria-describedby="search-addon"
+                      onChange={(e) => setSearchTerm(e.target.value)}
                     />
-                  </Box>
-                </TabPanel>
-              </Box>
-            </Item>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Box>
+                  </div>
+                </div>
+              </div>
+              <div className="container mt-2">
+                <div className="row">
+                  <div className="col-12">
+                    <div
+                      className="mt-3"
+                      style={{ height: 600, width: "100%" }}
+                    >
+                      <DataGrid
+                        sx={{ ml: 2 }}
+                        rows={filteredRows}
+                        columns={columns}
+                        disableSelectionOnClick
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+      <Modal id="exampleModal" title="Historical Detail" modalSize="modal-xl" >
+        <div ref={componentRef} >
+          <div className="row">
+            <div className="col-12">
+              <div class="card border rounded-4 border-success">
+                <div class="card-body">
+                  <h5 className="card-title mt-2 text-success">
+                    Donation Information
+                  </h5>
+                  <div className="row">
+                    <div className="col-4">
+                      <div>
+                        <div className="row">
+                          <div className="col-5">
+                            <h6>Serial NO</h6>
+                          </div>
+                          <div className="col-7">{historicalDetail.serial_no}</div>
+                        </div>
+                      </div>
+                      <div>
+                        <div className="row">
+                          <div className="col-5">
+                            <h6>Machine Type</h6>
+                          </div>
+                          <div className="col-7">{historicalDetail.machine_type}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-4">
+                      <div>
+                        <div className="row">
+                          <div className="col-4">
+                            <h6>Protocol</h6>
+                          </div>
+                          <div className="col-8">{historicalDetail.protocol}</div>
+                        </div>
+                      </div>
+                      <div>
+                        <div className="row">
+                          <div className="col-4">
+                            <h6>Revision</h6>
+                          </div>
+                          <div className="col-8">{historicalDetail.revision}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-4">
+                      <div>
+                        <div className="row">
+                          <div className="col-5">
+                            <h6>Date/Time</h6>
+                          </div>
+                          <div className="col-7">{historicalDetail.timestamp}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-6">
+              <div className="mt-2">
+                <div className="row">
+                  <div className="col-12">
+                    <div className="card border rounded-4 border-success">
+                      <div className="card-body">
+                        <h5 className="card-title text-success">
+                          Donation And Operator
+                        </h5>
+                        <div className="mt-4">
+                          <div className="row">
+                            <div className="col-6">
+                              <h6>Donation Number</h6>
+                            </div>
+                            <div className="col-6">{historicalDetail.donation_number}</div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="row">
+                            <div className="col-6">
+                              <h6>Donor</h6>
+                            </div>
+                            <div className="col-6">{historicalDetail.donor}</div>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-6">
+                            <h6>Venipuncture Operator</h6>
+                          </div>
+                          <div className="col-6">{historicalDetail.venipuncture_operator}</div>
+                        </div>
+                        <div className="row">
+                          <div className="col-6">
+                            <h6>Sex</h6>
+                          </div>
+                          <div className="col-6">{historicalDetail.sex}</div>
+                        </div>
+                        <div className="row">
+                          <div className="col-6">
+                            <h6>Hight</h6>
+                          </div>
+                          <div className="col-6">{historicalDetail.hight}</div>
+                        </div>
+                        <div className="row">
+                          <div className="col-6">
+                            <h6>Weight</h6>
+                          </div>
+                          <div className="col-6">{historicalDetail.weight}</div>
+                        </div>
+                        <div className="row">
+                          <div className="col-6">
+                            <h6>Blood Volume</h6>
+                          </div>
+                          <div className="col-6">{historicalDetail.blood_volume}</div>
+                        </div>
+                        <div className="row">
+                          <div className="col-6">
+                            <h6>HCT</h6>
+                          </div>
+                          <div className="col-6">{historicalDetail.hct}</div>
+                        </div>
+                        {/* <div className="row">
+                          <div className="col-6">
+                            <h6>PLT</h6>
+                          </div>
+                          <div className="col-6"></div>
+                        </div> */}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-2">
+                <div className="row">
+                  <div className="col-12">
+                    <div className="card border rounded-4 border-success">
+                      <div className="card-body">
+                        <h5 className="card-title text-success">
+                          Disposable used
+                        </h5>
+                        <table class="table table-bordered text-center mt-4">
+                          <thead className="table-secondary">
+                            <tr>
+                              <th scope="col" className="h7">
+                                List No.
+                              </th>
+                              <th scope="col">Lot No.</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{historicalDetail.disposable_list}</td>
+                              <td>{historicalDetail.disposable_lot}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div>
+                          <div className="row">
+                            <div className="col-6">
+                              <h6>Installation Operator</h6>
+                            </div>
+                            <div className="col-6">{historicalDetail.installation_operator}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-2">
+                <div className="row">
+                  <div className="col-12">
+                    <div className="card border rounded-4 border-success">
+                      <div className="card-body">
+                        <h5 className="card-title text-success">
+                          Anticoagulant used
+                        </h5>
+                        <table class="table table-bordered text-center mt-4">
+                          <thead className="table-secondary">
+                            <tr>
+                              <th scope="col">List No.</th>
+                              <th scope="col">Lot No.</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{historicalDetail.anticoagulant_list_1}</td>
+                              <td>{historicalDetail.anticoagulant_lot_1}</td>
+                            </tr>
+                            <tr>
+                              <td>{historicalDetail.anticoagulant_list_2}</td>
+                              <td>{historicalDetail.anticoagulant_lot_2}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div>
+                          <div className="row">
+                            <div className="col-6">
+                              <h6>Verification Operator</h6>
+                            </div>
+                            <div className="col-6">{historicalDetail.verification_operator}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* <div className="row mt-4">
+                <div className="col-12">
+                  <div className="card border rounded-4 border-success">
+                    <div className="card-body">
+                      <h5 className="card-title text-success">Remark</h5>
+                      <div className="row mt-2">
+                        <div className="col-12">
+                          <div className="card border rounded-4 border-dark">
+                            <div className="card-body">
+                              <div style={{ hight: 100 }}>-</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> */}
+            </div>
+            <div className="col-6">
+              <div className="mt-2">
+                <div className="row">
+                  <div className="col-12">
+                    <div className="card border rounded-4 border-success">
+                      <div className="card-body">
+                        <h5 className="card-title text-success">
+                          Disposable used
+                        </h5>
+                        <table class="table table-bordered text-center table-sm">
+                          <thead className="table-secondary">
+                            <tr>
+                              <th scope="col">Description</th>
+                              <th scope="col">Value</th>
+                              <th scope="col">Unit</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {/* <tr>
+                              <td>Sex</td>
+                              <td>{historicalDetail.sex}</td>
+                            </tr>
+                            <tr>
+                              <td>Hight</td>
+                              <td>{historicalDetail.hight}</td>
+                              <td>cm</td>
+                            </tr>
+                            <tr>
+                              <td>Weight</td>
+                              <td>{historicalDetail.weight}</td>
+                              <td>kg</td>
+                            </tr>
+                            <tr>
+                              <td>Blood Volume</td>
+                              <td>{historicalDetail.blood_volume}</td>
+                              <td>ml</td>
+                            </tr>
+                            <tr>
+                              <td>HCT</td>
+                              <td>{historicalDetail.hct}</td>
+                              <td>%</td>
+                            </tr>
+                            <tr>
+                              <td>PLT</td>
+                              <td>250</td>
+                              <td>10e3</td>
+                            </tr> */}
+                            <tr>
+                              <td>Volume Processed</td>
+                              <td>{historicalDetail.volume_processed}</td>
+                              <td>ml</td>
+                            </tr>
+                            <tr>
+                              <td>AC Volume Used</td>
+                              <td>{historicalDetail.ac_volume_used}</td>
+                              <td>ml</td>
+                            </tr>
+                            <tr>
+                              <td>Collection Time</td>
+                              <td>{historicalDetail.collection_time}</td>
+                              <td>min</td>
+                            </tr>
+                            <tr>
+                              <td>Number of Cycles</td>
+                              <td>{historicalDetail.number_of_cycles}</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>NaCL Volume Used</td>
+                              <td>{historicalDetail.nacl_volume_used}</td>
+                              <td>ml</td>
+                            </tr>
+                            <tr>
+                              <td>PRP Volume</td>
+                              <td>0</td>
+                              <td>ml</td>
+                            </tr>
+                            <tr>
+                              <td>AC in Plasma</td>
+                              <td>{historicalDetail.ac_in_plasma}</td>
+                              <td>ml</td>
+                            </tr>
+                            <tr>
+                              <td>AC in Platelets</td>
+                              <td>{historicalDetail.ac_in_platelets}</td>
+                              <td>ml</td>
+                            </tr>
+                            <tr>
+                              <td>AC in RBC</td>
+                              <td>0</td>
+                              <td>ml</td>
+                            </tr>
+                            <tr>
+                              <td>Plasma Volume</td>
+                              <td>{historicalDetail.plasma_volume}</td>
+                              <td>ml</td>
+                            </tr>
+                            <tr>
+                              <td>RBC Volume</td>
+                              <td>0</td>
+                              <td>ml</td>
+                            </tr>
+                            <tr>
+                              <td>RBC Additive Vol</td>
+                              <td>0</td>
+                              <td>ml</td>
+                            </tr>
+                            <tr>
+                              <td>RBC Product Vol</td>
+                              <td>0</td>
+                              <td>ml</td>
+                            </tr>
+                            <tr>
+                              <td>Platelets Volume</td>
+                              <td>{historicalDetail.platelets_volume}</td>
+                              <td>ml</td>
+                            </tr>
+                            <tr>
+                              <td>Plt Additive Vol</td>
+                              <td>{historicalDetail.plt_additive_vol}</td>
+                              <td>ml</td>
+                            </tr>
+                            <tr>
+                              <td>Plt Product Vol</td>
+                              <td>{historicalDetail.plt_product_vol}</td>
+                              <td>ml</td>
+                            </tr>
+                            <tr>
+                              <td>Estimated Yield</td>
+                              <td>{historicalDetail.estimated_yield}</td>
+                              <td>10e1</td>
+                            </tr>
+                            <tr>
+                              <td>Target Yield</td>
+                              <td>{historicalDetail.target_yield}</td>
+                              <td>10e1</td>
+                            </tr>
+                            <tr>
+                              <td>Plt Pre-Count</td>
+                              <td>{historicalDetail.plt_pre_count}</td>
+                              <td>10e3</td>
+                            </tr>
+                            <tr>
+                              <td>Plt Post-Count</td>
+                              <td>{historicalDetail.plt_post_count}</td>
+                              <td>10e3</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row mt-2">
+            <div className="col-12">
+              <div className="card border rounded-4 border-success">
+                <div className="card-body">
+                  <h5 className="card-title text-success">
+                    Error
+                  </h5>
+                  <table class="table table-bordered text-center table-sm">
+                    <thead className="table-secondary">
+                      <tr>
+                        <th scope="col">Code</th>
+                        <th scope="col">Timestamp</th>
+                        <th scope="col">Notice</th>
+                        <th scope="col">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      { error.map((item) => (
+                          <tr>
+                            <td>{item.code}</td>
+                            <td>{item.timestamp}</td>
+                            <td>{item.title}</td>
+                            <td>{item.detail}</td>
+                          </tr>
+                        ))
+                        }
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="text-end mt-2">
+          <button type="button" className="btn btn-success" style={{ marginRight: 5 }} onClick={handlePrint}>Print</button>
+          <button type="button" className="btn btn-success" data-bs-dismiss="modal">Close</button>
+        </div>
+
+      </Modal>
+    </>
   );
-};
+}
 
 export default HistoricalData;
-
-/**
- * @type {import("@mui/material").SxProps}
- */
 
 const styles = {
   pageTitle: {
     mb: 2,
-    mt: 1,
   },
   columnsContainer: {
     columns: "280px 3",
@@ -537,5 +688,11 @@ const styles = {
   },
   item: {
     mb: 2,
+  },
+  contrainerlayoutplan: {
+    position: "relative",
+    //display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 };

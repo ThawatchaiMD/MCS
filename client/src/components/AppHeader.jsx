@@ -15,47 +15,92 @@ function AppHeader() {
     navigate("/login");
   };
 
+  
+
   const { collapseSidebar, toggleSidebar, collapsed, broken } = useProSidebar();
 
   return (
-    <AppBar position="sticky" sx={styles.appBar}>
-      <Toolbar>
-        <IconButton
-          onClick={() => (broken ? toggleSidebar() : collapseSidebar())}
-          sx={{color:"white"}}
-        >
-          <MenuIcon />
-        </IconButton>
-        {/* <Box component={"img"} sx={styles.appLogo} src="public/Ennova.png" /> */}
-        <Box sx={{ flexGrow: 1 }} />
-        {/* 
-            <IconButton title="Notifications">
-                <Badge badgeContent={21} color="error">
-                    <NotificationsIcon />
-                </Badge>
+    <>
+      {/* <nav class="navbar navbar-expand-lg bg-body-tertiary"> */}
+      <nav class="navbar bg-white navbar-expand-lg" style={{ boxShadow: `0px 1px 4px #9E9E9E` }}>
+        <div class="container-fluid">
+          <div>
+            <IconButton
+              onClick={() => (broken ? toggleSidebar() : collapseSidebar())}
+              sx={{ color: "black" }}
+            >
+              <i class="fa-solid fa-house"></i>
             </IconButton>
-            <IconButton title="Settings" color="black">
-                <SettingsIcon />
-            </IconButton> */}
-        <IconButton title="Sign Out" color="warning" onClick={handleLogout} sx={{
-            color: "white",
-            // backgroundColor: "#784734",
-            // borderRadius: "50%",
-          }}>
-          <LogoutIcon />
-        </IconButton>
-      </Toolbar>
-    </AppBar>
+            <a class="navbar-brand mr-3">Dashboard</a>
+          </div>
+
+          {/* <a class="navbar-brand" href="#">Navbar</a> */}
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              {/* <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li> */}
+            </ul>
+            <div class="d-flex">
+              <IconButton title="Notifications" sx={{ mr: 2 }}>
+                <Badge className="text-success">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+              <div className="mt-2">
+                <i className="fa-solid fa-user text-success" style={{ marginRight: 7 }}></i>
+                <span className="text-dark mr-10"> Admin HypeTex</span>
+              </div>
+              <IconButton title="Sign Out" className="text-dark" onClick={handleLogout} sx={{
+                // color: "white",
+                // backgroundColor: "#784734",
+                // borderRadius: "50%",
+                mr: 3,
+                ml: 3
+              }}>
+                <LogoutIcon />
+              </IconButton>
+            </div>
+
+          </div>
+        </div>
+      </nav>
+
+    </>
+    // <div position="sticky" sx={styles.appBar}>
+    //   <Toolbar>
+    //     <IconButton
+    //       onClick={() => (broken ? toggleSidebar() : collapseSidebar())}
+    //       sx={{ color: "black" }}
+    //     >
+    //         <i class="fa-solid fa-house"></i>
+    //     </IconButton>
+    //     <h6 className="ml-10 mt-2 text-dark">Dashboard</h6>
+    //     <Box sx={{ flexGrow: 1 }} />
+    //     <IconButton title="Notifications" sx={{ mr: 2 }}>
+    //       <Badge className="text-success">
+    //         <NotificationsIcon />
+    //       </Badge>
+    //     </IconButton>
+    //     <div>
+    //       <i className="fa-solid fa-user text-success" style={{ marginRight: 7 }}></i>
+    //       <span className="text-dark"> Admin HypeTex</span>
+    //     </div>
+
+    //   </Toolbar>
+    // </div>
   );
 }
 
-/** @type {import("@mui/material").SxProps} */
 const styles = {
   appBar: {
-    bgcolor: "rgb(0, 0, 139)",
-    boxShadow: 0,
-    borderBottom: 1,
-    borderColor: "rgb(0, 0, 139)",
+    bgcolor: "rgb(255, 255, 255)",
+    boxShadow: 1,
+    borderColor: "rgb(255, 255, 255)",
+    hight: 50,
   },
   appLogo: {
     borderRadius: 1,

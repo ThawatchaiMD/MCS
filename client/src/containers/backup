@@ -1,0 +1,545 @@
+                        // </div><div className="container mt-5">
+                        //     <div className="row"  >
+                        //         <div className="col-12">
+
+                        //             <Tabs
+                        //                 value={value}
+                        //                 onChange={handleChange}
+                        //                 aria-label="basic tabs example"
+                        //             >
+                        //                 <Tab label="HAEMO UPDATE" {...a11yProps(0)} />
+                        //                 <Tab label="MODIFY PARAMETERRS" {...a11yProps(1)} />
+                        //                 <Tab label="HEAMO CALCULATOR" {...a11yProps(2)} />
+                        //                 <Tab label="END OF PROCEDURE" {...a11yProps(3)} />
+                        //             </Tabs>
+
+                        //         </div>
+                        //     </div>
+                        // </div>
+                        // <div className="container mt-3">
+                        //     <div className="row"  >
+                        //         <div className="col-12">
+                        //             <TabPanel value={value} index={0}>
+                        //                 <div className="row">
+                        //                     <div className="col-12">
+                        //                         <div className="card  rounded-4 border border-dark" style={{ background: `rgb(248, 255, 252` }}>
+                        //                             <div className="card-body">
+                        //                                 <div className="row">
+                        //                                     <div className="col-6">
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>AC Vol Used</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>11 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Elapsed Time</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>11 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Target Cycles</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>11 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>NaCl Volume  Used</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>11 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                     </div>
+                        //                                     <div className="col-6">
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Plasma Volume</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>0 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Platelet Volume</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>0 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Estimated Yile</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>11 10e9</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Target Yield</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>11 10e9</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                     </div>
+                        //                                 </div>
+                        //                             </div>
+                        //                         </div>
+                        //                     </div>
+                        //                 </div>
+                        //             </TabPanel>
+                        //             <TabPanel value={value} index={1}>
+                        //             <div className="row">
+                        //                     <div className="col-12">
+                        //                         <div className="card  rounded-4 border border-dark" style={{ background: `rgb(248, 255, 252` }}>
+                        //                             <div className="card-body">
+                        //                                 <div className="row">
+                        //                                     <div className="col-6">
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Cuff Pressure</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>11 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Draw Speed</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>11 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Return Speed</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>11 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>AC Ratio</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>11 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Min Ptt Volume</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>11 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                     </div>
+                        //                                     <div className="col-6">
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>NaCl Vol/Cycle</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>0 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Citrate Ctrl</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>0 </div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Ptt Concent Ctrl</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>11</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                     </div>
+                        //                                 </div>
+                        //                             </div>
+                        //                         </div>
+                        //                     </div>
+                        //                 </div>
+                        //             </TabPanel>
+                        //             <TabPanel value={value} index={2}>
+                        //             <div className="row">
+                        //                     <div className="col-12">
+                        //                         <div className="card  rounded-4 border border-dark" style={{ background: `rgb(248, 255, 252` }}>
+                        //                             <div className="card-body">
+                        //                                 <div className="row">
+                        //                                     <div className="col-6">
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Sex</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>M</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Height</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>170 cm</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Weight</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>70 kg</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Blood Volume</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>11 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>HTC</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>11 %</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Ptt Precount</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>11 10e3</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                     </div>
+                        //                                     <div className="col-6">
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Target Plasma Vol.</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>11 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Target Yield</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>0 10e9</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Process Volume</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>11 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Target Cycles</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>11 10e9</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Target Duration</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>11 Min</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                     </div>
+                        //                                 </div>
+                        //                             </div>
+                        //                         </div>
+                        //                     </div>
+                        //                 </div>
+                        //             </TabPanel>
+                        //             <TabPanel value={value} index={3}>
+                        //             <div className="row">
+                        //                     <div className="col-12">
+                        //                         <div className="card  rounded-4 border border-dark" style={{ background: `rgb(248, 255, 252` }}>
+                        //                             <div className="card-body">
+                        //                                 <div className="row">
+                        //                                     <div className="col-6">
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Volume Processed</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>1673 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>AC Vol Used</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>225 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Elapsed Time</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div></div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Number of Cycles</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>3</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>NaCl  Volume Used</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>0 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Citrate Ctrl</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>OFF</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Auto. Fitt</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>Done</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                     </div>
+                        //                                     <div className="col-6">
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Plasma Volume</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>0 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>AC in Plasma Bag</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>0 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Platelet Vol</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>245 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>AC in Plt Bag</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>42 ml</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Estimated Yield</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>220 10e9</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Target Yield</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>220 10e9</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                         <div className="mt-3">
+                        //                                             <div className="row">
+                        //                                                 <div className="col-6">
+                        //                                                     <h6>Plt Concent Ctrl</h6>
+                        //                                                 </div>
+                        //                                                 <div className="col-6">
+                        //                                                     <div>OFF</div>
+                        //                                                 </div>
+                        //                                             </div>
+                        //                                         </div>
+                        //                                     </div>
+                        //                                 </div>
+                        //                             </div>
+                        //                         </div>
+                        //                     </div>
+                        //                 </div>
+                        //             </TabPanel>
+                        //         </div>
+                        //     </div>
+
+                        // <div className="col-3">
+                        //             <div class="card border rounded-4 border-success">
+                        //                 <div class="card-body">
+                        //                     <div className="row">
+                        //                         <div className="col-6">
+                        //                             <h6 className="card-title">Card Protocol</h6>
+                        //                         </div>
+                        //                         <div className="col-6">
+                        //                             <div className="float-right text-success"> MCS+ -LDP</div>
+                        //                         </div>
+                        //                     </div>
+                        //                 </div>
+                        //                 <div className="row mb-3">
+                        //                     <div className="col-5 text-center">
+                        //                         <i class="fa-solid fa-circle-check text-success fa-3x"></i>
+                        //                     </div>
+                        //                     <div className="col-7">
+                        //                         <div className="mt-2">READY TO GO</div>
+                        //                     </div>
+                        //                 </div>
+                        //             </div>
+                        //         </div>
+                        //         <div className="col-9">
+                        //             <div class="card border rounded-4 border-success">
+                        //                 <div class="card-body">
+                        //                     <div className="row text-center">
+                        //                         <div className="col-3">
+                        //                             <h5 className="mt-3">1</h5>
+                        //                             <h6 className="mt-3 mb-3">Cycle</h6>
+                        //                         </div>
+                        //                         <div className="col-3">
+                        //                             <h5 className="mt-3">1</h5>
+                        //                             <h6 className="mt-3 mb-3">ml Plasma</h6>
+                        //                         </div>
+                        //                         <div className="col-3">
+                        //                             <h5 className="mt-3">1</h5>
+                        //                             <h6 className="mt-3 mb-3">ml Platelet Vol</h6>
+                        //                         </div>
+                        //                         <div className="col-3">
+                        //                             <h5 className="mt-3">1</h5>
+                        //                             <h6 className="mt-3 mb-3">ml Volume</h6>
+                        //                         </div>
+                        //                     </div>
+
+                        //                 </div>
+                        //             </div>
+                        //         </div>

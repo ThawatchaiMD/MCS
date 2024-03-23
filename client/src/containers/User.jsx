@@ -4,14 +4,11 @@ import { Box, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import IconButton from "@mui/material/IconButton";
-import ArticleIcon from "@mui/icons-material/Article";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import { Link } from "react-router-dom";
 import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 import { useNavigate } from "react-router-dom";
-
-
 
 const User = () => {
   let navigate = useNavigate();
@@ -27,23 +24,26 @@ const User = () => {
       flex: 1,
     },
     {
-      field: "fname",
+      field: "first_name",
       headerName: "First Name",
       headerAlign: "center",
+      align: "center",
       minWidth: 200,
       flex: 1,
     },
     {
-      field: "lname",
+      field: "last_name",
       headerName: "Last Name",
       headerAlign: "center",
+      align: "center",
       minWidth: 155,
       flex: 1,
     },
     {
-      field: "email",
+      field: "username",
       headerName: "Email",
       headerAlign: "center",
+      align: "center",
       minWidth: 155,
       flex: 1,
     },
@@ -58,17 +58,9 @@ const User = () => {
         <Box sx={styles.Column}>
           <IconButton
             size="large"
-            onClick = {(e) => deleteUser(e, params.row.id)}
+            onClick={(e) => deleteUser(e, params.row.id)}
           >
             <DeleteIcon fontSize="inherit" />
-          </IconButton>
-          <IconButton
-            component={Link}
-            to="/editdeviceinfo"
-            state={{ device: params.row }}
-            size="large"
-          >
-            <BorderColorIcon fontSize="inherit" />
           </IconButton>
         </Box>
       ),
@@ -76,26 +68,31 @@ const User = () => {
   ];
 
   useEffect(() => {
-    Axios.get("http://119.59.105.226:3333/user")
-      .then((response) => {
-        response.data.map((val) => {
-          setUser(val.user);
-        });
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    fetchData();
   }, []);
 
+  const fetchData = async () => {
+    try {
+      await Axios.get(import.meta.env.VITE_APP_API + "/user/list")
+        .then((response) => {
+          console.log(response.data);
+          setUser(response.data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const deleteUser = (e, row) => {
-    Axios.get("http://119.59.105.226:3333/deleteuser", {
+    Axios.get(import.meta.env.VITE_APP_API + "/user/remove", {
       params: {
-        id:row
+        id: row,
       },
     }).then((response) => {
-      response.data.map((val) => {
-        setUser(val.user);
-      });
+      fetchData();
     });
   };
 
@@ -104,7 +101,7 @@ const User = () => {
   };
 
   return (
-    <Box>
+    <div className="App container" >
       <Typography sx={styles.pageTitle} variant="h5">
         User
       </Typography>
@@ -113,7 +110,9 @@ const User = () => {
         endIcon={<PersonAddAltOutlinedIcon />}
         sx={{
           mb: 2,
+          float: "light",
         }}
+        color="success"
         onClick={addUser}
       >
         Add User
@@ -125,8 +124,9 @@ const User = () => {
         rowsPerPageOptions={[25]}
         autoHeight
         rowHeight={70}
+        disableSelectionOnClick
       />
-    </Box>
+    </div>
   );
 };
 
@@ -138,6 +138,7 @@ export default User;
 
 const styles = {
   pageTitle: {
+    mt: 4,
     mb: 2,
   },
   Column: {

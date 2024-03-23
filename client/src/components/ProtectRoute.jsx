@@ -8,7 +8,8 @@ const ProtectedRoute = () => {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    fetch("http://119.59.105.226:3333/authen", {
+
+    fetch( import.meta.env.VITE_APP_API + "/auth", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,12 +28,23 @@ const ProtectedRoute = () => {
       .catch((error) => {
         console.error("Error:", error);
       });
+
+  //   if (token === 'adminJCA@gmail.com') {
+  //   setIsisLogIn(true);
+  // } else {
+  //   navigate('/login')
+  //   setIsisLogIn(false);
+  // }
+  
   }, [token]);
 
+  
+
   if (isLogIn === true) {
-    return <Outlet />;}
+    return <Outlet />;
+  }
   // } else {
-  //   return 
+  //   return
   //   <Navigate to="/login" />;
   // };
 

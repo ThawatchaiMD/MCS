@@ -82,20 +82,20 @@ const Customization = () => {
   const [arr7day, setArr7day] = useState([])
   const [arr30day, setArr30day] = useState([])
  
-  useEffect(() => {
-    Axios.get("http://119.59.105.226:3333/charttotalenergypeak")
+  // useEffect(() => {
+  //   Axios.get("http://119.59.105.226:3333/charttotalenergypeak")
 
-      .then((response) => {
-        response.data.map((val) => {
-          setArrHour(val.arrHour);
-          setArr7day(val.arr7day)
-          setArr30day(val.arr30day)
-        });
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }, []);
+  //     .then((response) => {
+  //       response.data.map((val) => {
+  //         setArrHour(val.arrHour);
+  //         setArr7day(val.arr7day)
+  //         setArr30day(val.arr30day)
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error:", error);
+  //     });
+  // }, []);
 
 
   return (
@@ -133,13 +133,13 @@ const Customization = () => {
           </CardContent>
         </Card>
       </Box> */}
-      <Grid>
+      {/* <Grid>
         <Box>
           <Box sx={{ width: "99%" }}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
               <Tabs
-                value={value}
-                onChange={handleChange}
+                // value={value}
+                // onChange={handleChange}
                 aria-label="basic tabs example"
               >
                 <Tab label="Past 24 Hr" {...a11yProps(0)} />
@@ -248,7 +248,7 @@ const Customization = () => {
             </TabPanel>
           </Box>
         </Box>
-      </Grid>
+      </Grid> */}
     </Box>
   );
 };

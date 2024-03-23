@@ -1,15 +1,9 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -18,23 +12,23 @@ import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
-// function Copyright(props) {
-//   return (
-//     <Typography
-//       variant="body2"
-//       color="text.secondary"
-//       align="center"
-//       {...props}
-//     >
-//       {"Copyright © "}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{" "}
-//       {new Date().getFullYear()}
-//       {"."}
-//     </Typography>
-//   );
-// }
+function Copyright(props) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
 
 const theme = createTheme();
 
@@ -49,11 +43,22 @@ export default function SignInSide() {
     const data = new FormData(event.currentTarget);
 
     const jsonData = {
-      email: data.get("email"),
+      username: data.get("email"),
       password: data.get("password"),
     };
 
-    fetch("http://119.59.105.226:3333/login", {
+    // if (jsonData.email === 'adminJCA@gmail.com' && jsonData.password === 'admin1111') {
+    //   localStorage.setItem("token", jsonData.email);
+    //   navigate('/dashboard')
+    // } else {
+    //     MySwal.fire({
+    //         title: "Login",
+    //         text: "User or Password Incorrect",
+    //         icon: 'error'
+    //       })
+    // }
+
+    fetch( import.meta.env.VITE_APP_API + "/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,21 +67,11 @@ export default function SignInSide() {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data)
         if (data.status === "ok") {
-          // MySwal.fire({
-          //   html: <i>You clicked the button!</i>,
-          //   icon: 'success'
-          // })
-          // then(() => {
-            localStorage.setItem("token", data.token);
-            navigate('/dashboard')
-            console.log("ok")
-          //})  
+          localStorage.setItem("token", data.token);
+          navigate("/");
         } else {
-          // MySwal.fire({
-          //   html: <i>You clicked the button!</i>,
-          //   icon: 'error'
-          // })
         }
       })
       .catch((error) => {
@@ -86,48 +81,58 @@ export default function SignInSide() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
-        <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            //backgroundImage: "url(https://source.unsplash.com/random)",
-            //backgroundImage: "/src/assets/Picture.png",
-            backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-          component={'img'}
-          src="public/logo.png" 
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Box sx={{
+        backgroundColor: 'rgba(223, 228, 225, 1)', height: "100vh",display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        margin: "auto",
+        marginTop: "auto",
+        marginBottom: "auto", 
+      }}>
+
+        <Box sx={{
+          height: 700,
+          width: 600,
+          borderRadius: '0.6em',
+          boxShadow: '5px 5px 10px 1px grey',
+          backgroundColor: 'rgba(255, 255, 255, 1)'
+        }}>
           <Box
             sx={{
               my: 8,
               mx: 4,
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
+              alignItems: "center"
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
+            <Grid
+              item
+              xs={false}
+              sm={4}
+              md={7}
+              sx={{
+                height: 100,
+                width: 200,
+                backgroundRepeat: "no-repeat",
+                backgroundColor: (t) =>
+                  t.palette.mode === "light"
+                    ? t.palette.grey[50]
+                    : t.palette.grey[900],
+                backgroundSize: "cover",
+                backgroundPosition: "center"
+              }}
+              component={'img'}
+              src="public/MCS+.png"
+            />
+            <h4 className="login">
+              Monitoring Platform
+            </h4>
             <Box
               component="form"
               noValidate
               onSubmit={handleSubmit}
-              sx={{ mt: 1 }}
+              sx={{ mt: 7 }}
             >
               <TextField
                 margin="normal"
@@ -138,6 +143,7 @@ export default function SignInSide() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                sx={{ backgroundColor: 'rgba(223, 228, 225, 1)' }}
               />
               <TextField
                 margin="normal"
@@ -148,36 +154,23 @@ export default function SignInSide() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
+                sx={{ backgroundColor: 'rgba(223, 228, 225, 1)' }}
               />
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                color="success"
+
+                sx={{ mt: 1, mb: 2, borderRadius: '0.6em' }}
               >
-                Sign In
+                Log In
               </Button>
-              {/* <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="/register" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid> 
-              <Copyright sx={{ mt: 5 }} />*/}
+              <Copyright sx={{ mt: 10 }} />
             </Box>
           </Box>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </ThemeProvider>
   );
 }

@@ -6,9 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./page/Login";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  <>
     
      <App /> 
   
-  </React.StrictMode>
+  </>
 );

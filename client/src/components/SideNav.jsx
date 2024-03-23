@@ -17,7 +17,8 @@ function SideNav() {
     <Sidebar
       style={{ height: "100%", top: "auto" }}
       breakPoint="md%"
-      backgroundColor={theme.palette.neutral.light}
+      backgroundColor="white"
+      // backgroundColor={theme.palette.neutral.light}
     >
       {/* <Box sx={styles.menuContainer}>
             <IconButton onClick={() => broken ? toggleSidebar() : collapseSidebar()} >
@@ -37,15 +38,15 @@ function SideNav() {
               marginLeft: 1,
               cursor: "pointer",
             }}
-            src="public/Ennova.png"
+            src="public/MCS+.png"
           />
         ) : (
-          <Box component={"img"} sx={styles.appLogo} src="public/Ennova.png" />
+          <Box component={"img"} sx={styles.appLogo} src="public/MCS+.png" />
         )}
         {!collapsed ? (
-          <Typography variant="body2" sx={styles.yourChannel}>
-            HTC Energy
-          </Typography>
+          <h5 className="mt-4 text-success">
+            Monitoring System
+          </h5>
         ) : null}
       </Box>
 
@@ -65,35 +66,28 @@ function SideNav() {
           <Typography variant="body2">Dashboard</Typography>{" "}
         </MenuItem>
         <MenuItem
-          component={<Link to="/mydevices" />}
+          component={<Link to="/procedure" />}
           icon={<SourceOutlinedIcon />}
         >
           {" "}
-          <Typography variant="body2">My Devices </Typography>
+          <Typography variant="body2">Procedure </Typography>
         </MenuItem>
         <MenuItem
-          component={<Link to="/historicaldata" />}
+          component={<Link to="/historical" />}
           icon={<AnalyticsOutlinedIcon />}
         >
           {" "}
-          <Typography variant="body2">Hitorical Data </Typography>
+          <Typography variant="body2">Hitorical Proecdure </Typography>
         </MenuItem>
-        <MenuItem
-          component={<Link to="/energyexport" />}
+        {/* <MenuItem
+          // component={<Link to="/energyexport" />}
           icon={<FileDownloadOutlinedIcon />}
         >
           {" "}
-          <Typography variant="body2">Energy Export </Typography>
-        </MenuItem>
-        <MenuItem
-          component={<Link to="/systemoverview" />}
-          icon={<ViewCompactAltOutlinedIcon />}
-        >
-          {" "}
-          <Typography variant="body2">System Overview </Typography>
-        </MenuItem>
+          <Typography variant="body2">Administrator </Typography>
+        </MenuItem> */}
         <Box sx={styles.setting}>
-          {!collapsed ? <Typography variant="body3">Setting</Typography> : null}
+          {!collapsed ? <Typography variant="body3">User Setting</Typography> : null}
         </Box>
         <MenuItem
           component={<Link to="/user" />}
