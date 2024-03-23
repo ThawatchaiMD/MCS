@@ -351,32 +351,62 @@ function HistoricalData() {
                           <div className="col-6">
                             <h6>Hight</h6>
                           </div>
-                          <div className="col-6">{historicalDetail.hight}</div>
+                          <div className="col-6">
+                            <div className="row">
+                              < div className="col-6">
+                                {historicalDetail.hight}
+                              </div>
+                              <div className="col-6">
+                                cm
+                              </div> 
+                            </div>
+                          </div>
                         </div>
                         <div className="row">
                           <div className="col-6">
                             <h6>Weight</h6>
                           </div>
-                          <div className="col-6">{historicalDetail.weight}</div>
+                          <div className="col-6">
+                            <div className="row">
+                              < div className="col-6">
+                                {historicalDetail.weight}
+                              </div>
+                              <div className="col-6">
+                                  kg
+                              </div> 
+                            </div>
+                          </div>
                         </div>
                         <div className="row">
                           <div className="col-6">
                             <h6>Blood Volume</h6>
                           </div>
-                          <div className="col-6">{historicalDetail.blood_volume}</div>
+                          <div className="col-6">
+                            <div className="row">
+                              < div className="col-6">
+                                {historicalDetail.blood_volume}
+                              </div>
+                              <div className="col-6">
+                                ml
+                              </div> 
+                            </div>
+                          </div>
                         </div>
                         <div className="row">
                           <div className="col-6">
                             <h6>HCT</h6>
                           </div>
-                          <div className="col-6">{historicalDetail.hct}</div>
-                        </div>
-                        {/* <div className="row">
                           <div className="col-6">
-                            <h6>PLT</h6>
+                            <div className="row">
+                              < div className="col-6">
+                                {historicalDetail.hct}
+                              </div>
+                              <div className="col-6">
+                                %
+                              </div> 
+                            </div>
                           </div>
-                          <div className="col-6"></div>
-                        </div> */}
+                        </div>
                       </div>
                     </div>
                   </div>
